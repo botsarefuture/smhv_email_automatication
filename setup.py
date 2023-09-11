@@ -1,14 +1,16 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='my-custom-email-package',
+    name='smhv-mailer',
     version='0.1',
-    description='A custom email sender package for Python',
-    author='Your Name',
-    author_email='your.email@example.com',
-    url='https://github.com/yourusername/my-custom-email-package',
+    description='SMHV custom email sender package for Python',
+    author='SMHV',
+    author_email='verso.vuorenmaa@sinimustaahallitustavastaan.org',
+    url='https://github.com/botsarefuture/smhv_email_automatication',
     packages=find_packages(),
     install_requires=[
-        # List any dependencies here
-    ],
+    'smtplib',
+    'email',
+    # Add any other dependencies here
+],
 )
