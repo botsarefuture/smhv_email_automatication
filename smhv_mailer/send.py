@@ -2,13 +2,13 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-def send_custom_email(recipient_name, recipient_email, event_info):
+def send_custom_email(smtp: dict, recipient_name: str, recipient_email: str, event_info: dict):
     # Set up your email configuration
-    smtp_server = "mail.sinimustaahallitustavastaan.org"
-    smtp_port = 587  # This may vary depending on your server configuration
-    sender_email = "your_email@sinimustaahallitustavastaan.org"
-    sender_password = "your_password"
-
+    smtp_server = smtp.get("server", None)
+    smtp_port = smtp.get("port", 587)
+    sender_email = smtp.get("email")
+    sender_password = smtp.get("password")
+    
     # Create a message object
     msg = MIMEMultipart()
     msg['From'] = sender_email
@@ -36,15 +36,3 @@ def send_custom_email(recipient_name, recipient_email, event_info):
         print("Email sent successfully.")
     except Exception as e:
         print("Error sending email:", str(e))
-
-# Example usage:
-event_details = {
-    'event_name': 'Community Gathering',
-    'event_date': '2023-09-15',
-    'event_location': 'Community Center'
-}
-
-recipient_name = 'John Doe'
-recipient_email = 'john.doe@example.com'
-
-send_custom_email(recipient_name, recipient_email, event_details)
