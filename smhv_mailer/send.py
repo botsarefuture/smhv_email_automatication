@@ -2,7 +2,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-def send_custom_email(smtp: dict, recipient_name: str, recipient_email: str, event_info: dict):
+def send_custom_email(smtp: dict, recipient_name: str, recipient_email: str, event_info: dict, lang: str):
     """
     Send a custom email to remind recipients about an event.
 
@@ -35,15 +35,30 @@ def send_custom_email(smtp: dict, recipient_name: str, recipient_email: str, eve
     msg = MIMEMultipart()
     msg['From'] = sender_email
     msg['To'] = recipient_email
-    msg['Subject'] = f"Event Reminder: {event_info['event_name']}"
+    if lang == "fi":
+        msg['Subject'] = f"Kiitos ilmoittautumisestasi {event_info['event_name']}"
+
+
+    if lang == "en":
+        msg['Subject'] = f"Thank you for signing up for {event_info['event_name']}"
 
     # Compose the email body
-    body = f"Hello, {recipient_name}!\n\n"
-    body += f"This is a reminder for the upcoming event: {event_info['event_name']}.\n"
-    body += f"Date: {event_info['event_date']}\n"
-    body += f"Location: {event_info['event_location']}\n\n"
-    body += "We look forward to seeing you there!\n\n"
-    body += "Best regards,\nYour Event Team"
+    
+    if lang == "fi":
+        body = f"Hei, {recipient_name}!\n\n"
+        body += f"Tämä on muistutus tulevasta tapahtumasta: {event_info['event_name']}.\n"
+        body += f"Päivämäärä: {event_info['event_date']}\n"
+        body += f"Paikka: {event_info['event_location']}\n\n"
+        body += "Odotamme innolla tapaamistamme siellä!\n\n"
+        body += "Ystävällisin terveisin,\nTapahtumatiimisi"
+    
+    if lang == "en":
+        body = f"Hello, {recipient_name}!\n\n"
+        body += f"This is a reminder for the upcoming event: {event_info['event_name']}.\n"
+        body += f"Date: {event_info['event_date']}\n"
+        body += f"Location: {event_info['event_location']}\n\n"
+        body += "We look forward to seeing you there!\n\n"
+        body += "Best regards,\nYour Event Team"
 
     msg.attach(MIMEText(body, 'plain'))
 
