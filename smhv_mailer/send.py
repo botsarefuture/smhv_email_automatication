@@ -3,6 +3,28 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 def send_custom_email(smtp: dict, recipient_name: str, recipient_email: str, event_info: dict):
+    """
+    Send a custom email to remind recipients about an event.
+
+    Args:
+        smtp (dict): A dictionary containing SMTP server configuration.
+            - server (str): The SMTP server address.
+            - port (int, optional): The SMTP server port (default is 587).
+            - email (str): The sender's email address.
+            - password (str): The sender's email password.
+        recipient_name (str): The recipient's name.
+        recipient_email (str): The recipient's email address.
+        event_info (dict): A dictionary containing event details.
+            - event_name (str): The name of the event.
+            - event_date (str): The date of the event.
+            - event_location (str): The location of the event.
+
+    Raises:
+        Exception: If there is an error sending the email.
+
+    Returns:
+        None: This function does not return any value.
+    """
     # Set up your email configuration
     smtp_server = smtp.get("server", None)
     smtp_port = smtp.get("port", 587)
@@ -35,4 +57,4 @@ def send_custom_email(smtp: dict, recipient_name: str, recipient_email: str, eve
         server.quit()
         print("Email sent successfully.")
     except Exception as e:
-        print("Error sending email:", str(e))
+        raise Exception("Error sending email:", str(e))
